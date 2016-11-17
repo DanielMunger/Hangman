@@ -1,0 +1,20 @@
+<p>
+  @for(var i = 0; i < @Model.GetWord().Length; i++)
+  {
+  <span id="@i"> _ </span>
+}
+</p>
+
+<p>Letters guessed:</p>
+<p>
+  @foreach(string letter in @Model.GetLettersGuessed())
+  {
+    @letter
+  }
+</p>
+
+<form action="/game" method="post">
+  <label for="guess">Guess a single letter:</label>
+  <input name="guess" type="text" id="guess">
+  <button type="submit">Guess</button>
+</form>
