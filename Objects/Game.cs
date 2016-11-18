@@ -5,6 +5,7 @@ namespace Hangman.Objects
   public class Game
   {
     private string _word;
+    private string _gameWord;
     private int _incorrectGuesses;
     private bool _gameWin;
     private bool _gameOver;
@@ -19,6 +20,7 @@ namespace Hangman.Objects
       _gameOver = false;
       _gameWin = false;
       _word = "peanut";
+      _gameWord = _word;
       _gameState = this;
     }
     public static Game GetGameState()
@@ -37,7 +39,10 @@ namespace Hangman.Objects
     {
       _lettersGuessed.Add(guess);
     }
-
+    public string GetGameWord()
+    {
+      return _gameWord;
+    }
     public string GetWord()
     {
       return _word;
@@ -59,15 +64,15 @@ namespace Hangman.Objects
       _lettersGuessed.Add(guess);
       if(_word.Contains(guess))
       {
-        List<int> indexes = new List<int>{};
+
         while(_word.Contains(guess))
         {
           int location = _word.IndexOf(guess);
           _word = _word.Remove(location, 1);
           _word = _word.Insert(location, " ");
-          indexes.Add(location);
+          _correctGuessIndexes.Add(location);
         }
-        _correctGuessIndexes = indexes;
+
       }else
       {
         _incorrectGuesses++;
