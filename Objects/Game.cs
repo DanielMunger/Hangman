@@ -8,7 +8,7 @@ namespace Hangman.Objects
     private int _incorrectGuesses;
     private bool _gameWin;
     private bool _gameOver;
-
+    private List<int> _correctGuessIndexes = new List<int>{};
     private List<string> _words = new List<string>{};
     private List<string> _lettersGuessed = new List<string>{};
 
@@ -42,6 +42,38 @@ namespace Hangman.Objects
     {
       return _word;
     }
+    public bool IsGuessed(string guess)
+    {
+      bool result = false;
+      foreach(string letter in _lettersGuessed)
+      {
+        if(_lettersGuessed.Contains(guess))
+        {
+          result = true;
+        }
+      }
+      return result;
+    }
+    public void CheckLetter(string guess)
+    {
+      _lettersGuessed.Add(guess);
+      if(_word.Contains(guess))
+      {
+        List<int> indexes = new List<int>{};
+        while(_word.Contains(guess))
+        {
+          int location = _word.IndexOf(guess);
+          _word = _word.Remove(location, 1);
+          _word = _word.Insert(location, " ");
+          indexes.Add(location);
+        }
+        _correctGuessIndexes = indexes;
+      }else
+      {
+        _incorrectGuesses++;
+      }
+    }
+
     public void IncrementIncorrectGuesses()
     {
       _incorrectGuesses++;
@@ -49,6 +81,10 @@ namespace Hangman.Objects
     public int GetIncorrectGuesses()
     {
       return _incorrectGuesses;
+    }
+    public List<int> GetCorrectGuesses()
+    {
+      return _correctGuessIndexes;
     }
     public void SetGameWin()
     {

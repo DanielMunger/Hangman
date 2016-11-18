@@ -21,7 +21,10 @@ namespace Hangman
       {
         Game game = Game.GetGameState();
         string guess = Request.Form["guess"];
-        game.AddLetterGuessed(guess);
+        if(!game.IsGuessed(guess))
+        {
+          game.CheckLetter(guess);
+        }
         Game.SetGameState(game);
         return View["game.cshtml", game];
       };

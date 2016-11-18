@@ -12,7 +12,12 @@
     @letter
   }
 </p>
-
+<p>
+  @foreach(int index in @Model.GetCorrectGuesses())
+  {
+    <span> @index </span>
+  }
+</p>
 <form action="/game" method="post">
   <label for="guess">Guess a single letter:</label>
   <input name="guess" type="text" id="guess">
